@@ -1,0 +1,51 @@
+{
+  "manifestVersion": 1,
+  "id": "pr-comment-extension",
+  "publisher": "TommiLaukkanen",
+  "version": "1.0.1",
+  "name": "PR Comment Extension",
+  "description": "Azure DevOps extension to easily add pull request comments from pipeline",
+  "public": false,
+  "categories": ["Azure Repos", "Azure Pipelines"],
+  "repostory": {
+    "type": "git",
+    "uri": "https://github.com/tlaukkanen/azure-devops-pr-comment-extension"
+  },
+  "icons": {
+    "default": "images/dalle-128x128.png"
+  },
+  "targets": [
+      {
+          "id": "Microsoft.VisualStudio.Services"
+      }
+  ],
+  "contributions": [
+      {
+          "id": "pr-comment",
+          "type": "ms.vss-web.hub",
+          "targets": [
+              "ms.vss-code-web.code-hub-group"
+          ],
+          "properties": {
+              "name": "My Hub",
+              "uri": "my-hub.html"
+          }
+      }
+  ],
+  "content": {
+    "details": {
+      "path": "overview.ms"
+    }
+  },
+  "files": [
+      {
+          "path": "my-hub.html",
+          "addressable": true
+      },
+      {
+          "path": "node_modules/vss-web-extension-sdk/lib",
+          "addressable": true,
+          "packagePath": "lib"
+      }
+  ]
+}

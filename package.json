@@ -1,0 +1,23 @@
+{
+  "name": "azure-devops-pr-comment-extension",
+  "version": "1.0.0",
+  "description": "Extension for Azure DevOps for adding comments from pipeline to pull request",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tlaukkanen/azure-devops-pr-comment-extension.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tlaukkanen/azure-devops-pr-comment-extension/issues"
+  },
+  "homepage": "https://github.com/tlaukkanen/azure-devops-pr-comment-extension#readme",
+  "dependencies": {
+    "vss-web-extension-sdk": "^5.141.0"
+  }
+}
