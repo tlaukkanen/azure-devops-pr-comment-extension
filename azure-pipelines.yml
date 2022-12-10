@@ -30,3 +30,6 @@ steps:
     targetPath: '$(Build.ArtifactStagingDirectory)'
     artifactName: vsix
   displayName: 'Publish VSIX package'
+
+- script: |
+    npx tfx-cli extension publish --token $(MarketplaceAccessToken) --publisher TommiLaukkanen --manifest vss-extension.json
