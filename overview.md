@@ -30,3 +30,5 @@ You can install the extension to your Azure DevOps organization from Marketplace
 [PR Comment Task](https://marketplace.visualstudio.com/items?itemName=TommiLaukkanen.pr-comment-extension)
 
 You may need to add **Contribute to pull requests** permission to your **Project Collection Build Service Accounts** from project -> repository -> **Security**.
+
+![Permissions](screenshots/screen3.png)
