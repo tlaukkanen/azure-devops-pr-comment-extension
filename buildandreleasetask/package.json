@@ -1,11 +1,11 @@
 {
   "name": "buildandreleasetask",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha dist/tests/_suite.js",
-    "build": "tsc --build tsconfig.json"
+    "build": "tsc --build tsconfig.json",
+    "test": "mocha dist/tests/_suite.js"
   },
   "keywords": [],
   "author": "",
