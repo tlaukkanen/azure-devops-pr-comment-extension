@@ -21,9 +21,9 @@ describe('Task tests', function () {
       tr.run();
       console.log(`Task result: ${tr.succeeded}`);
       console.log(tr.stdout);
-      assert.equal(tr.succeeded, false, 'should not have succeeded without input');
+      assert.equal(tr.succeeded, true, 'should have succeeded with simple input');
       assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-      assert.equal(tr.errorIssues.length, 1, "should have errors");
+      assert.equal(tr.errorIssues.length, 0, "should have no errors");
       console.log(tr.stdout);
       done();
     });

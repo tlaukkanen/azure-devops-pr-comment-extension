@@ -9,14 +9,14 @@ async function run() {
       console.log(`Empty comment given - skipping PR comment`)
       return
     }
-    const accessToken = tl.getEndpointAuthorizationParameter('SystemVssConnection', 'AccessToken', false) ?? ''
-    const authHandler = azdev.getPersonalAccessTokenHandler(accessToken) ?? ''
-    const collectionUri = tl.getVariable('System.CollectionUri') ?? ''
     const pullRequestId = parseInt(tl.getVariable('System.PullRequest.PullRequestId') ?? '-1')
     if(pullRequestId < 0 ) {
       console.log(`No pull request id - skipping PR comment`)
       return
     }
+    const accessToken = tl.getEndpointAuthorizationParameter('SystemVssConnection', 'AccessToken', false) ?? ''
+    const authHandler = azdev.getPersonalAccessTokenHandler(accessToken) ?? ''
+    const collectionUri = tl.getVariable('System.CollectionUri') ?? ''
     const repositoryId = tl.getVariable('Build.Repository.ID') ?? ''
     const connection = new azdev.WebApi(collectionUri, authHandler)
     const gitApi = await connection.getGitApi()    
