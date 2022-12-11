@@ -10,17 +10,21 @@
   "version": {
       "Major": 1,
       "Minor": 0,
-      "Patch": 12
+      "Patch": 13
   },
   "instanceNameFormat": "PR Comment",
   "inputs": [
       {
           "name": "comment",
-          "type": "string",
+          "type": "multiLine",
+          "properties": {
+            "resizable": true,
+            "rows": "1"
+          },
           "label": "Comment text. Markdown supported.",
           "defaultValue": "This is **sample** _text_",
           "required": true,
-          "helpMarkDown": "A sample string"
+          "helpMarkDown": "Specify a comment to be added on pull request"
       }
   ],
   "execution": {
