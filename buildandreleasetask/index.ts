@@ -1,6 +1,6 @@
 import tl = require('azure-pipelines-task-lib/task')
 import azdev = require('azure-devops-node-api')
-import { CommentThreadStatus } from 'azure-devops-node-api/interfaces/GitInterfaces'
+import { CommentThreadStatus, CommentType } from 'azure-devops-node-api/interfaces/GitInterfaces'
 
 async function run() {
   try{
@@ -30,10 +30,13 @@ async function run() {
     console.log('Get GitApi object')
     const gitApi = await connection.getGitApi()    
     const thread : any = {
-      comments: [comment],
+      comments: [{
+        commentType: CommentType.Text,
+        content: comment,
+      }],
       lastUpdatedDate: new Date(),
       publishedDate: new Date(),
-      status: CommentThreadStatus.Closed
+      status: CommentThreadStatus.Closed,
     }
     console.log('Create thread')
     const t = await gitApi.createThread(thread, repositoryId, pullRequestId)

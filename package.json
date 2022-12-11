@@ -1,6 +1,6 @@
 {
   "name": "azure-devops-pr-comment-extension",
-  "version": "1.0.1",
+  "version": "1.0.11",
   "description": "Extension for Azure DevOps for adding comments from pipeline to pull request",
   "main": "index.js",
   "scripts": {
