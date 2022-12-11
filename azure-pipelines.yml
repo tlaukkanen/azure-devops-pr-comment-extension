@@ -16,7 +16,15 @@ steps:
   displayName: 'npm install'
 
 - script: |
+    npm install
+    npm run build
+    npm run test
+  displayName: 'Build & test task'
+  workingDirectory: 'buildandreleasetask/'
+
+- script: |
     npx tfx-cli extension create
+  displayName: Create VSIX package
 
 - task: CopyFiles@2
   inputs:
