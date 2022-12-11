@@ -2,6 +2,8 @@
 
 Azure DevOps extension to easily add Azure Repos pull request comments from pipeline with single task. Extension is free and  Open Source.
 
+Task can be used to communicate key information from build, dev deployment etc. to the developers. For example URL of the test environment for the pull request or any other data that would be nice to have visible without a need to go to the build logs for details.
+
 # Usage
 
 When extension is added to your organization then you can find it from the extensions list or you can add it simply to your yaml pipeline with the following task command:
@@ -19,7 +21,7 @@ When extension is added to your organization then you can find it from the exten
   displayName: 'PR Comment'
 ```
 
-This will for example create the following comment on the pull request:
+This example would create the following comment on the pull request:
 ![Screenshot](screenshots/screen1.png)
 
 # Installation

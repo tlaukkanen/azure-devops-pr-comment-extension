@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "azure-devops-node-api": "^11.2.0",
     "azure-pipelines-task-lib": "^4.1.0"
