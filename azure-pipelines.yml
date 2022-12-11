@@ -41,3 +41,4 @@ steps:
 
 - script: |
     npx tfx-cli extension publish --token $(MarketplaceAccessToken) --publisher TommiLaukkanen --share-with tlaukkanen --manifest vss-extension.json
+  displayName: Publish to Marketplace

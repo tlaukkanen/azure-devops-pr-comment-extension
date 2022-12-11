@@ -13,7 +13,7 @@ async function run() {
       console.log('hello', comment)
       return
     }    
-
+    console.log(`Comment: ${comment}`)
     const accessToken = tl.getEndpointAuthorizationParameter('SystemVssConnection', 'AccessToken', false) ?? ''
     console.log(`accessToken length ${accessToken.length}`)
     const buildId = tl.getVariable('Build.BuildId') ?? ''
@@ -28,11 +28,7 @@ async function run() {
     console.log('Get azDO connection')
     const connection = new azdev.WebApi(collectionUri, authHandler)
     console.log('Get GitApi object')
-    const gitApi = await connection.getGitApi()
-    
-    console.log('Get pull request')
-    const pullRequest = await gitApi.getPullRequestById(pullRequestId)
-    
+    const gitApi = await connection.getGitApi()    
     const thread : any = {
       comments: [comment],
       lastUpdatedDate: new Date(),
@@ -40,7 +36,7 @@ async function run() {
       status: CommentThreadStatus.Closed
     }
     console.log('Create thread')
-    const t = (await gitApi).createThread(thread, repositoryId, pullRequestId)
+    const t = await gitApi.createThread(thread, repositoryId, pullRequestId)
     console.log('done')
   }
   catch (err:any) {

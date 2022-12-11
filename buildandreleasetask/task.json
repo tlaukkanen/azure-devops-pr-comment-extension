@@ -10,12 +10,12 @@
   "version": {
       "Major": 1,
       "Minor": 0,
-      "Patch": 9
+      "Patch": 10
   },
   "instanceNameFormat": "PR Comment",
   "inputs": [
       {
-          "name": "Comment",
+          "name": "comment",
           "type": "string",
           "label": "Comment text. Markdown supported.",
           "defaultValue": "This is **sample** _text_",
