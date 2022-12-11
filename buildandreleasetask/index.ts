@@ -5,29 +5,20 @@ import { CommentThreadStatus, CommentType } from 'azure-devops-node-api/interfac
 async function run() {
   try{
     const comment: string | undefined = tl.getInput('comment', true)
-    if(comment == 'bad') {
-      tl.setResult(tl.TaskResult.Failed, 'Bad comment was given')
+    if(comment == '' || comment == undefined) {
+      console.log(`Empty comment given - skipping PR comment`)
       return
     }
-    if(comment == 'unittest comment') {
-      console.log('hello', comment)
-      return
-    }    
-    console.log(`Comment: ${comment}`)
     const accessToken = tl.getEndpointAuthorizationParameter('SystemVssConnection', 'AccessToken', false) ?? ''
-    console.log(`accessToken length ${accessToken.length}`)
-    const buildId = tl.getVariable('Build.BuildId') ?? ''
-    console.log(`buildId ${buildId}`)
     const authHandler = azdev.getPersonalAccessTokenHandler(accessToken) ?? ''
     const collectionUri = tl.getVariable('System.CollectionUri') ?? ''
-    console.log(`collectionUri ${collectionUri}`)
     const pullRequestId = parseInt(tl.getVariable('System.PullRequest.PullRequestId') ?? '-1')
-    console.log(`Pull request ID ${pullRequestId}`)
+    if(pullRequestId < 0 ) {
+      console.log(`No pull request id - skipping PR comment`)
+      return
+    }
     const repositoryId = tl.getVariable('Build.Repository.ID') ?? ''
-    console.log(`Repository ID ${repositoryId}`)
-    console.log('Get azDO connection')
     const connection = new azdev.WebApi(collectionUri, authHandler)
-    console.log('Get GitApi object')
     const gitApi = await connection.getGitApi()    
     const thread : any = {
       comments: [{
@@ -38,9 +29,8 @@ async function run() {
       publishedDate: new Date(),
       status: CommentThreadStatus.Closed,
     }
-    console.log('Create thread')
     const t = await gitApi.createThread(thread, repositoryId, pullRequestId)
-    console.log('done')
+    console.log(`Comment added on pull request: ${comment}`)
   }
   catch (err:any) {
     tl.setResult(tl.TaskResult.Failed, err.message)

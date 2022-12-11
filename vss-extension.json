@@ -2,12 +2,12 @@
   "manifestVersion": 1,
   "id": "pr-comment-extension",
   "publisher": "TommiLaukkanen",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "name": "PR Comment Extension",
   "description": "Azure DevOps extension to easily add pull request comments from pipeline",
   "public": false,
   "categories": ["Azure Repos", "Azure Pipelines"],
-  "repostory": {
+  "repository": {
     "type": "git",
     "uri": "https://github.com/tlaukkanen/azure-devops-pr-comment-extension"
   },
