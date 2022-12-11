@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "azure-devops-node-api": "^11.2.0",
     "azure-pipelines-task-lib": "^4.1.0"
   },
   "devDependencies": {

@@ -5,6 +5,6 @@ import path = require('path');
 let taskPath = path.join(__dirname, '..', 'index.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
-tmr.setInput('comment', 'test comment');
+tmr.setInput('comment', 'unittest comment');
 
 tmr.run();
