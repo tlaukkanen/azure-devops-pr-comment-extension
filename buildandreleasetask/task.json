@@ -8,28 +8,28 @@
   "category": "Utility",
   "author": "Tommi Laukkanen",
   "version": {
-      "Major": 1,
-      "Minor": 0,
-      "Patch": 21
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 22
   },
   "instanceNameFormat": "PR Comment",
   "inputs": [
-      {
-          "name": "comment",
-          "type": "multiLine",
-          "properties": {
-            "resizable": true,
-            "rows": "1"
-          },
-          "label": "Comment text. Markdown supported.",
-          "defaultValue": "This is **sample** _text_",
-          "required": true,
-          "helpMarkDown": "Specify a comment to be added on pull request"
-      }
+    {
+      "name": "comment",
+      "type": "multiLine",
+      "properties": {
+        "resizable": true,
+        "rows": "1"
+      },
+      "label": "Comment text. Markdown supported.",
+      "defaultValue": "This is **sample** _text_",
+      "required": true,
+      "helpMarkDown": "Specify a comment to be added on pull request"
+    }
   ],
   "execution": {
-      "Node10": {
-          "target": "dist/index.js"
-      }
+    "Node10": {
+      "target": "dist/index.js"
+    }
   }
 }

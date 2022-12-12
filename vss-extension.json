@@ -2,20 +2,12 @@
   "manifestVersion": 1,
   "id": "pr-comment-extension",
   "publisher": "TommiLaukkanen",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "name": "PR Comment Task",
   "description": "Azure DevOps extension to easily add pull request comments from pipeline task",
   "public": true,
-  "categories": [
-    "Azure Repos",
-    "Azure Pipelines"
-  ],
-  "tags": [
-    "build",
-    "pr",
-    "comment",
-    "pullrequest"
-  ],
+  "categories": ["Azure Repos", "Azure Pipelines"],
+  "tags": ["build", "pr", "comment", "pullrequest"],
   "repository": {
     "type": "git",
     "uri": "https://github.com/tlaukkanen/azure-devops-pr-comment-extension"
@@ -32,9 +24,7 @@
     {
       "id": "pr-comment",
       "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
+      "targets": ["ms.vss-distributed-task.tasks"],
       "properties": {
         "name": "buildandreleasetask"
       }
@@ -42,7 +32,7 @@
   ],
   "content": {
     "details": {
-      "path": "overview.md"
+      "path": "README.md"
     },
     "license": {
       "path": "LICENSE.txt"
