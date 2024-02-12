@@ -19,7 +19,8 @@ async function run() {
     const collectionUri = tl.getVariable('System.CollectionUri') ?? ''
     const repositoryId = tl.getVariable('Build.Repository.ID') ?? ''
     const connection = new azdev.WebApi(collectionUri, authHandler)
-    const gitApi = await connection.getGitApi()    
+    const gitApi = await connection.getGitApi()
+    const isActive = tl.getBoolInput('active', false)
     const thread : any = {
       comments: [{
         commentType: CommentType.Text,
@@ -27,7 +28,7 @@ async function run() {
       }],
       lastUpdatedDate: new Date(),
       publishedDate: new Date(),
-      status: CommentThreadStatus.Closed,
+      status: isActive ? CommentThreadStatus.Active : CommentThreadStatus.Closed,
     }
     const t = await gitApi.createThread(thread, repositoryId, pullRequestId)
     console.log(`Comment added on pull request: ${comment}`)

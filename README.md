@@ -11,6 +11,7 @@ When extension is added to your organization then you can find it from the exten
 ```
 - task: PullRequestComment@1
   inputs:
+    active: false
     comment: |
       This is **sample** _text_ 🎉
       [This is link](https://microsoft.com)
