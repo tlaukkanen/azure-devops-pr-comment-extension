@@ -8,10 +8,16 @@ async function run() {
     const markdownFile: string | undefined = tl.getPathInput('markdownFile', false)
     let markdownContent: string | undefined = undefined
     if(markdownFile != undefined) {
+      console.log(`Markdown file given: ${markdownFile}`)
       if(!fs.existsSync(markdownFile)) {
         throw new Error(`File ${markdownFile} does not exist`)
       }
-      markdownContent = fs.readFileSync(markdownFile, 'utf8')
+      console.log(`Reading markdown content from file: ${markdownFile}`)
+      try {
+        markdownContent = fs.readFileSync(markdownFile, 'utf8')
+      } catch (err:any) {
+        console.log(`Error reading markdown file: ${err.message}`)
+      }
     }
     const comment: string | undefined = tl.getInput('comment', true)
     if(comment == '' || comment == undefined) {
