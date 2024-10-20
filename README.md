@@ -4,6 +4,11 @@ Azure DevOps extension to easily add Azure Repos pull request comments from pipe
 
 Task can be used to communicate key information from build, dev deployment etc. to the developers. For example URL of the test environment for the pull request or any other data that would be nice to have visible without a need to go to the build logs for details.
 
+If you like the extension, consider buying me a coffee ☕😊
+<a href="https://www.buymeacoffee.com/tlaukkanen" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+...and if you don't like it then send me some feedback or improvement ideas through [issues](https://github.com/tlaukkanen/azure-devops-pr-comment-extension/issues) so I can make it better.
+
 # Usage
 
 When extension is added to your organization then you can find it from the extensions list or you can add it simply to your yaml pipeline with the following task command:
@@ -12,6 +17,10 @@ When extension is added to your organization then you can find it from the exten
 - task: PullRequestComment@1
   inputs:
     active: false
+    # Markdown file parameter is optional. If it is set
+    # then the content of that file is used as comment
+    # and comment parameter is ignored. Use full path.
+    #markdownFile: $(Build.SourcesDirectory)/your_markdown_file.md 
     comment: |
       This is **sample** _text_ 🎉
       [This is link](https://microsoft.com)

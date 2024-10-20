@@ -9,7 +9,7 @@
   "author": "Tommi Laukkanen",
   "version": {
     "Major": 1,
-    "Minor": 1,
+    "Minor": 2,
     "Patch": 0
   },
   "instanceNameFormat": "PR Comment",
@@ -33,6 +33,13 @@
       "label": "Active",
       "required": false,
       "helpMarkDown": "If checked, the comment will be added as active. Otherwise, it will be added as a closed comment."
+    },
+    {
+      "name": "markdownFile",
+      "type": "filePath",
+      "label": "Markdown file",
+      "required": false,
+      "helpMarkDown": "Path to a markdown file. If specified, the content of the file will be used as comment text."
     }
   ],
   "execution": {

@@ -1,9 +1,18 @@
 import tl = require('azure-pipelines-task-lib/task')
 import azdev = require('azure-devops-node-api')
 import { CommentThreadStatus, CommentType } from 'azure-devops-node-api/interfaces/GitInterfaces'
+import * as fs from 'fs'
 
 async function run() {
   try{
+    const markdownFile: string | undefined = tl.getPathInput('markdownFile', false)
+    let markdownContent: string | undefined = undefined
+    if(markdownFile != undefined) {
+      if(!fs.existsSync(markdownFile)) {
+        throw new Error(`File ${markdownFile} does not exist`)
+      }
+      markdownContent = fs.readFileSync(markdownFile, 'utf8')
+    }
     const comment: string | undefined = tl.getInput('comment', true)
     if(comment == '' || comment == undefined) {
       console.log(`Empty comment given - skipping PR comment`)
@@ -24,7 +33,7 @@ async function run() {
     const thread : any = {
       comments: [{
         commentType: CommentType.Text,
-        content: comment,
+        content: markdownContent ?? comment,
       }],
       lastUpdatedDate: new Date(),
       publishedDate: new Date(),
