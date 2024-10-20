@@ -7,7 +7,9 @@ async function run() {
   try{
     const markdownFile: string | undefined = tl.getPathInput('markdownFile', false)
     let markdownContent: string | undefined = undefined
-    if(markdownFile != undefined) {
+    // We need to check if the markdown file was given with "filePathSupplied" 
+    // because the task lib will return root folder string in any case as part of the getPathInput return value
+    if(markdownFile != undefined && tl.filePathSupplied('markdownFile')) {
       console.log(`Markdown file given: ${markdownFile}`)
       if(!fs.existsSync(markdownFile)) {
         throw new Error(`File ${markdownFile} does not exist`)
