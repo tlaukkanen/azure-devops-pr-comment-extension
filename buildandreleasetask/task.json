@@ -43,6 +43,9 @@
     }
   ],
   "execution": {
+    "Node10": {
+      "target": "dist/index.js"
+    },
     "Node16": {
       "target": "dist/index.js"
     },

@@ -21,6 +21,8 @@ steps:
     npm run test
   displayName: 'Build & test task'
   workingDirectory: 'buildandreleasetask/'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - script: |
     npx tfx-cli extension create
