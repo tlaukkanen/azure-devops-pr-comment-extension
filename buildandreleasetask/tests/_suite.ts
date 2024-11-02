@@ -20,6 +20,9 @@ describe('Task tests', function () {
   
       tr.run();
       console.log(`Task result: ${tr.succeeded}`);
+      if(!tr.succeeded && tr.errorIssues.length > 0) {
+        console.log(`Errors: ${tr.errorIssues}`);
+      }
       console.log(tr.stdout);
       assert.equal(tr.succeeded, true, 'should have succeeded with simple input');
       assert.equal(tr.warningIssues.length, 0, "should have no warnings");
