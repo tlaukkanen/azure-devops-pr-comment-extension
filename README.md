@@ -5,6 +5,7 @@ Azure DevOps extension to easily add Azure Repos pull request comments from pipe
 Task can be used to communicate key information from build, dev deployment etc. to the developers. For example URL of the test environment for the pull request or any other data that would be nice to have visible without a need to go to the build logs for details.
 
 If you like the extension, consider buying me a coffee ☕😊
+
 <a href="https://www.buymeacoffee.com/tlaukkanen" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ...and if you don't like it then send me some feedback or improvement ideas through [issues](https://github.com/tlaukkanen/azure-devops-pr-comment-extension/issues) so I can make it better.
