@@ -1,6 +1,6 @@
 import tl = require('azure-pipelines-task-lib/task')
 import azdev = require('azure-devops-node-api')
-import { CommentThreadStatus, CommentType, GitPullRequestCommentThread } from 'azure-devops-node-api/interfaces/GitInterfaces'
+import { Comment, CommentThreadStatus, CommentType, GitPullRequestCommentThread } from 'azure-devops-node-api/interfaces/GitInterfaces'
 import * as fs from 'fs'
 
 async function run() {
@@ -83,9 +83,13 @@ async function run() {
               console.log(`First comment is not a text comment - skipping PR comment update`)
               return
             }
-            firstComment.content = markdownContent ?? comment
+            const updatedComment : Comment = {
+              commentType: CommentType.Text,
+              content: markdownContent ?? comment,
+            }
+            
             const c = await gitApi.updateComment(
-              firstComment, 
+              updatedComment, 
               repositoryId, 
               pullRequestId, 
               thread.id, 
