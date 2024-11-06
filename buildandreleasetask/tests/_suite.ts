@@ -31,4 +31,23 @@ describe('Task tests', function () {
       done();
     });
 
+    it('should add comment only once', function(done: Mocha.Done) {
+      this.timeout(5000);
+  
+      let tp = path.join(__dirname, 'add-only-once.js');
+      let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+  
+      tr.run();
+      console.log(`Task result: ${tr.succeeded}`);
+      if(!tr.succeeded && tr.errorIssues.length > 0) {
+        console.log(`Errors: ${tr.errorIssues}`);
+      }
+      console.log(tr.stdout);
+      assert.equal(tr.succeeded, true, 'should have succeeded with simple input');
+      assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+      assert.equal(tr.errorIssues.length, 0, "should have no errors");
+      console.log(tr.stdout);
+      done();
+    }
+
 });

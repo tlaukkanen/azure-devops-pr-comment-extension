@@ -18,10 +18,16 @@ When extension is added to your organization then you can find it from the exten
 - task: PullRequestComment@1
   inputs:
     active: false
-    # Markdown file parameter is optional. If it is set
-    # then the content of that file is used as comment
-    # and comment parameter is ignored. Use full path.
-    #markdownFile: $(Build.SourcesDirectory)/your_markdown_file.md 
+    # Markdown file - if this is set then the content of that file is used as comment
+    # and comment parameter is ignored. Use full path. Optional.
+    #markdownFile: $(Build.SourcesDirectory)/your_markdown_file.md
+    # Only once - if you trigger PR comment task multiple times but
+    # you want it to add comment only once you can set this to true. Optional.
+    #addCommentOnlyOnce: false
+    # Update original - if you trigger PR comment task multiple times but
+    # you don't want to pollute your PR with multiple comments then you can make it
+    # to update the original comment. Optional.
+    #updatePreviousComment: false
     comment: |
       This is **sample** _text_ 🎉
       [This is link](https://microsoft.com)

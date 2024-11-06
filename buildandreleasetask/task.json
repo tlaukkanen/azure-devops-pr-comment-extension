@@ -9,7 +9,7 @@
   "author": "Tommi Laukkanen",
   "version": {
     "Major": 1,
-    "Minor": 3,
+    "Minor": 4,
     "Patch": 0
   },
   "instanceNameFormat": "PR Comment",
@@ -33,6 +33,22 @@
       "label": "Active",
       "required": false,
       "helpMarkDown": "If checked, the comment will be added as active. Otherwise, it will be added as a closed comment."
+    },
+    {
+      "name": "addCommentOnlyOnce",
+      "type": "boolean",
+      "defaultValue": false,
+      "label": "Add comment only once",
+      "required": false,
+      "helpMarkDown": "If checked, new comment won't be added if the comment already exists even if content does not match."
+    },
+    {
+      "name": "updatePreviousComment",
+      "type": "boolean",
+      "defaultValue": false,
+      "label": "Active",
+      "required": false,
+      "helpMarkDown": "If checked, the comment will be updated if it already exists."
     },
     {
       "name": "markdownFile",
