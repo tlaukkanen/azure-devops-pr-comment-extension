@@ -43,9 +43,11 @@ async function run() {
     if(addCommentOnlyOnce) {
       // Get old threads and check if there is already a thread with the comment task property
       const threads = await gitApi.getThreads(repositoryId, pullRequestId)
+      console.log(`Checking if there is a thread with comment task property to add the PR comment only once`)
       if(threads != undefined && threads.length > 0) {
         for(const thread of threads) {
-          if(thread.properties != undefined && thread.properties['pr-comment-task'] != undefined) {
+          console.log(`Checking thread: ${thread.id} with properties: ${JSON.stringify(thread.properties ?? {})}`)
+          if(thread.properties != undefined && thread.properties['PullRequestCommentTask'] != undefined) {
             console.log(`Thread already exists with comment task property - skipping PR comment`)
             return
           }
@@ -57,16 +59,23 @@ async function run() {
     if(updatePreviousComment) {
       // Get old threads and check if there is already a thread with the comment task property
       const threads = await gitApi.getThreads(repositoryId, pullRequestId)
+      console.log(`Checking if there is a thread with comment task property to update the PR comment`)
       if(threads != undefined && threads.length > 0) {
         for(const thread of threads) {
+          console.log(`Checking thread: ${thread.id} with properties: ${JSON.stringify(thread.properties ?? {})}`)
           if( thread.properties != undefined && 
-              thread.properties['pr-comment-task'] != undefined &&
-              thread.id != undefined &&
-              thread.comments != undefined &&
-              thread.comments.length > 0) {
+              thread.properties['PullRequestCommentTask'] != undefined &&
+              thread.id != undefined) {
             console.log(`Thread already exists with comment task property - updating PR comment`)
 
-            const firstComment = thread.comments[0]
+            const comments = await gitApi.getComments(repositoryId, pullRequestId, thread.id)
+            if(comments == undefined || comments.length < 1) {
+              console.log(`No comments found in thread - skipping PR comment update`)
+              break
+            }
+            console.log(`Updating first comment in thread: ${comments[0].id}`)
+
+            const firstComment = comments[0]
             if(
               firstComment.commentType != CommentType.Text ||
               firstComment.id == undefined
@@ -99,7 +108,7 @@ async function run() {
       publishedDate: new Date(),
       status: isActive ? CommentThreadStatus.Active : CommentThreadStatus.Closed,
       properties: {
-        'pr-comment-task': 'true'
+        'PullRequestCommentTask': 'true'
       }
     }
     const t = await gitApi.createThread(thread, repositoryId, pullRequestId)
