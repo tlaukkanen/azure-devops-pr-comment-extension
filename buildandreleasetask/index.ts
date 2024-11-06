@@ -45,7 +45,7 @@ async function run() {
       const threads = await gitApi.getThreads(repositoryId, pullRequestId)
       if(threads != undefined && threads.length > 0) {
         for(const thread of threads) {
-          if(thread.properties != undefined && thread.properties['pr-comment-task'] == 'true') {
+          if(thread.properties != undefined && thread.properties['pr-comment-task'] != undefined) {
             console.log(`Thread already exists with comment task property - skipping PR comment`)
             return
           }
@@ -60,7 +60,7 @@ async function run() {
       if(threads != undefined && threads.length > 0) {
         for(const thread of threads) {
           if( thread.properties != undefined && 
-              thread.properties['pr-comment-task'] == 'true' &&
+              thread.properties['pr-comment-task'] != undefined &&
               thread.id != undefined &&
               thread.comments != undefined &&
               thread.comments.length > 0) {
