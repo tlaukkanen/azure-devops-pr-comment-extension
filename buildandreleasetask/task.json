@@ -9,8 +9,8 @@
   "author": "Tommi Laukkanen",
   "version": {
     "Major": 1,
-    "Minor": 4,
-    "Patch": 3
+    "Minor": 5,
+    "Patch": 0
   },
   "instanceNameFormat": "PR Comment",
   "inputs": [
