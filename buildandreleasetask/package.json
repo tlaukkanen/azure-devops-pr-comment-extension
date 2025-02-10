@@ -11,14 +11,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "azure-devops-node-api": "^11.2.0",
-    "azure-pipelines-task-lib": "^4.1.0"
+    "azure-devops-node-api": "^14.1.0",
+    "azure-pipelines-task-lib": "^5.0.0"
   },
   "devDependencies": {
-    "@types/mocha": "^8.1.0",
-    "@types/node": "^10.0.0",
-    "@types/q": "^1.5.5",
-    "mocha": "^8.1.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.13.1",
+    "@types/q": "^1.5.8",
+    "mocha": "^11.1.0",
     "sync-request": "^6.1.0"
   }
 }

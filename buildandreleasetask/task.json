@@ -56,6 +56,20 @@
       "label": "Markdown file",
       "required": false,
       "helpMarkDown": "Path to a markdown file. If specified, the content of the file will be used as comment text."
+    },
+    {
+      "name": "pullRequestId",
+      "type": "string",
+      "label": "Pull Request ID",
+      "required": false,
+      "helpMarkDown": "Add comment to this pull request. If not specified, the comment will be added to the current pull request. Required if repositoryId is specified."
+    },
+    {
+      "name": "repositoryId",
+      "type": "string",
+      "label": "Pull Request Repository ID",
+      "required": false,
+      "helpMarkDown": "Add comment to pull request in this repository. If not specified, the comment will be added to the current repository."
     }
   ],
   "execution": {
