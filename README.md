@@ -35,6 +35,10 @@ When extension is added to your organization then you can find it from the exten
       | Table |
       |---|
       | Cell |
+    # Pull Request ID - Update specific pull request. Required if repositoryId is set.
+    #pullRequestId: ""
+    # Repository ID - Update pull request in specific repository.
+    #repositoryId: ""
   displayName: 'PR Comment'
 ```
 
