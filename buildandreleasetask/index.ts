@@ -3,6 +3,31 @@ import azdev = require('azure-devops-node-api')
 import { Comment, CommentThreadStatus, CommentType, GitPullRequestCommentThread } from 'azure-devops-node-api/interfaces/GitInterfaces'
 import * as fs from 'fs'
 
+const taskProperty = 'PullRequestCommentTask'
+const commentReferenceProperty = 'PullRequestCommentTask.CommentReference'
+
+function getThreadProperty(properties: any, name: string): string | undefined {
+  const value = properties?.[name]
+  if (value == undefined) {
+    return undefined
+  }
+  if (typeof value === 'object' && '$value' in value) {
+    return String(value.$value)
+  }
+  return String(value)
+}
+
+function isMatchingTaskThread(thread: GitPullRequestCommentThread, commentReference: string): boolean {
+  if (getThreadProperty(thread.properties, taskProperty) == undefined) {
+    return false
+  }
+
+  const existingReference = getThreadProperty(thread.properties, commentReferenceProperty)
+  return commentReference === ''
+    ? existingReference == undefined || existingReference === ''
+    : existingReference === commentReference
+}
+
 async function run() {
   try {
     const markdownFile: string | undefined = tl.getPathInput('markdownFile', false)
@@ -40,6 +65,7 @@ async function run() {
     const connection = new azdev.WebApi(collectionUri, authHandler)
     const gitApi = await connection.getGitApi()
     const isActive = tl.getBoolInput('active', false)
+    const commentReference = (tl.getInput('commentReference', false) ?? '').trim()
 
     const addCommentOnlyOnce = tl.getBoolInput('addCommentOnlyOnce', false)
     if (addCommentOnlyOnce) {
@@ -49,7 +75,7 @@ async function run() {
       if (threads != undefined && threads.length > 0) {
         for (const thread of threads) {
           console.log(`Checking thread: ${thread.id} with properties: ${JSON.stringify(thread.properties ?? {})}`)
-          if (thread.properties != undefined && thread.properties['PullRequestCommentTask'] != undefined) {
+          if (isMatchingTaskThread(thread, commentReference)) {
             console.log(`Thread already exists with comment task property - skipping PR comment`)
             return
           }
@@ -65,8 +91,7 @@ async function run() {
       if (threads != undefined && threads.length > 0) {
         for (const thread of threads) {
           console.log(`Checking thread: ${thread.id} with properties: ${JSON.stringify(thread.properties ?? {})}`)
-          if (thread.properties != undefined &&
-            thread.properties['PullRequestCommentTask'] != undefined &&
+          if (isMatchingTaskThread(thread, commentReference) &&
             thread.id != undefined) {
             console.log(`Thread already exists with comment task property - updating PR comment`)
 
@@ -114,7 +139,10 @@ async function run() {
       publishedDate: new Date(),
       status: isActive ? CommentThreadStatus.Active : CommentThreadStatus.Closed,
       properties: {
-        'PullRequestCommentTask': 'true'
+        [taskProperty]: 'true',
+        ...(commentReference !== '' && {
+          [commentReferenceProperty]: commentReference
+        })
       }
     }
     const t = await gitApi.createThread(thread, repositoryId, pullRequestId)
