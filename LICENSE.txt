@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2022 Tommi Laukkanen
+Copyright (c) 2022-present Tommi Laukkanen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

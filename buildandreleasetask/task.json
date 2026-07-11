@@ -46,9 +46,16 @@
       "name": "updatePreviousComment",
       "type": "boolean",
       "defaultValue": false,
-      "label": "Active",
+      "label": "Update previous comment",
       "required": false,
       "helpMarkDown": "If checked, the comment will be updated if it already exists."
+    },
+    {
+      "name": "commentReference",
+      "type": "string",
+      "label": "Comment reference",
+      "required": false,
+      "helpMarkDown": "Identifies this task's comment when adding a comment only once or updating a previous comment."
     },
     {
       "name": "markdownFile",

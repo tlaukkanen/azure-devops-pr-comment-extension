@@ -28,6 +28,10 @@ When extension is added to your organization then you can find it from the exten
     # you don't want to pollute your PR with multiple comments then you can make it
     # to update the original comment. Optional.
     #updatePreviousComment: false
+    # Comment reference - This will allow task to identify specific comment when
+    # using `addCommentOnlyOnce: true` or `updatePreviousComment: true` options 
+    # and multiple different comments on same PR. Optional.
+    commentReference: 'my-pr-comment'
     comment: |
       This is **sample** _text_ 🎉
       [This is link](https://microsoft.com)
