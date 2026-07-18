@@ -7,4 +7,5 @@ let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 tmr.setInput('comment', 'Test');
 tmr.setInput('active', 'true');
+tmr.setInput('pullRequestId', '-1');
 tmr.run();
