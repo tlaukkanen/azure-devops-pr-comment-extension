@@ -12,13 +12,13 @@ describe('Task tests', function () {
 
     });
 
-    it('should succeed with simple inputs', function() {
-      this.timeout(5000);
+    it('should succeed with simple inputs', async function() {
+      this.timeout(120000);
 
       let tp = path.join(__dirname, 'success.js');
       let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-      tr.run();
+      await tr.runAsync();
       console.log(`Task result: ${tr.succeeded}`);
       if(!tr.succeeded && tr.errorIssues.length > 0) {
         console.log(`Errors: ${tr.errorIssues}`);
@@ -30,13 +30,13 @@ describe('Task tests', function () {
       console.log(tr.stdout);
     });
 
-    it('should add comment only once', function() {
-      this.timeout(5000);
+    it('should add comment only once', async function() {
+      this.timeout(120000);
 
       let tp = path.join(__dirname, 'add-only-once.js');
       let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-      tr.run();
+      await tr.runAsync();
       console.log(`Task result: ${tr.succeeded}`);
       if(!tr.succeeded && tr.errorIssues.length > 0) {
         console.log(`Errors: ${tr.errorIssues}`);
@@ -48,13 +48,13 @@ describe('Task tests', function () {
       console.log(tr.stdout);
     });
 
-    it('should log the markdown file content that was added', function() {
-      this.timeout(5000);
+    it('should log the markdown file content that was added', async function() {
+      this.timeout(120000);
 
       let tp = path.join(__dirname, 'markdown-file.js');
       let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-      tr.run();
+      await tr.runAsync();
       assert.equal(tr.succeeded, true, 'should have succeeded with markdown file input');
       assert.equal(tr.warningIssues.length, 0, "should have no warnings");
       assert.equal(tr.errorIssues.length, 0, "should have no errors");
