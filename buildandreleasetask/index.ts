@@ -51,6 +51,7 @@ async function run() {
       console.log(`Empty comment given - skipping PR comment`)
       return
     }
+    const effectiveComment = markdownContent ?? comment
     const pullRequestInput: string | undefined = tl.getInput('pullRequestId', false) ?? tl.getVariable('System.PullRequest.PullRequestId') ?? '-1'
     const pullRequestId = parseInt(pullRequestInput)
     if (pullRequestId < 0) {
@@ -112,7 +113,7 @@ async function run() {
             }
             const updatedComment: Comment = {
               commentType: CommentType.Text,
-              content: markdownContent ?? comment,
+              content: effectiveComment,
             }
 
             const c = await gitApi.updateComment(
@@ -122,7 +123,7 @@ async function run() {
               thread.id,
               firstComment.id
             )
-            console.log(`Comment updated on pull request: ${comment}`)
+            console.log(`Comment updated on pull request: ${effectiveComment}`)
             return
           }
         }
@@ -133,7 +134,7 @@ async function run() {
     const thread: GitPullRequestCommentThread = {
       comments: [{
         commentType: CommentType.Text,
-        content: markdownContent ?? comment,
+        content: effectiveComment,
       }],
       lastUpdatedDate: new Date(),
       publishedDate: new Date(),
@@ -146,7 +147,7 @@ async function run() {
       }
     }
     const t = await gitApi.createThread(thread, repositoryId, pullRequestId)
-    console.log(`Comment added on pull request: ${comment}`)
+    console.log(`Comment added on pull request: ${effectiveComment}`)
   }
   catch (err: any) {
     tl.setResult(tl.TaskResult.Failed, err.message)

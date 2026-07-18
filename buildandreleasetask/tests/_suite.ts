@@ -12,13 +12,13 @@ describe('Task tests', function () {
 
     });
 
-    it('should succeed with simple inputs', function(done: Mocha.Done) {
+    it('should succeed with simple inputs', function() {
       this.timeout(5000);
 
       let tp = path.join(__dirname, 'success.js');
       let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-      tr.runAsync();
+      tr.run();
       console.log(`Task result: ${tr.succeeded}`);
       if(!tr.succeeded && tr.errorIssues.length > 0) {
         console.log(`Errors: ${tr.errorIssues}`);
@@ -28,16 +28,15 @@ describe('Task tests', function () {
       assert.equal(tr.warningIssues.length, 0, "should have no warnings");
       assert.equal(tr.errorIssues.length, 0, "should have no errors");
       console.log(tr.stdout);
-      done();
     });
 
-    it('should add comment only once', function(done: Mocha.Done) {
+    it('should add comment only once', function() {
       this.timeout(5000);
 
       let tp = path.join(__dirname, 'add-only-once.js');
       let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-      tr.runAsync();
+      tr.run();
       console.log(`Task result: ${tr.succeeded}`);
       if(!tr.succeeded && tr.errorIssues.length > 0) {
         console.log(`Errors: ${tr.errorIssues}`);
@@ -47,7 +46,21 @@ describe('Task tests', function () {
       assert.equal(tr.warningIssues.length, 0, "should have no warnings");
       assert.equal(tr.errorIssues.length, 0, "should have no errors");
       console.log(tr.stdout);
-      done();
+    });
+
+    it('should log the markdown file content that was added', function() {
+      this.timeout(5000);
+
+      let tp = path.join(__dirname, 'markdown-file.js');
+      let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+      tr.run();
+      assert.equal(tr.succeeded, true, 'should have succeeded with markdown file input');
+      assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+      assert.equal(tr.errorIssues.length, 0, "should have no errors");
+      assert.equal(tr.stdOutContained('Created thread content: # File comment'), true, 'should send markdown file content to the API');
+      assert.equal(tr.stdOutContained('Comment added on pull request: # File comment'), true, 'should log markdown file content');
+      assert.equal(tr.stdOutContained('Comment added on pull request: This is **sample** _text_'), false, 'should not log the fallback comment');
     });
 
 });
