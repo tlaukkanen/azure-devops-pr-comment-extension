@@ -28,8 +28,13 @@ When extension is added to your organization then you can find it from the exten
     # you don't want to pollute your PR with multiple comments then you can make it
     # to update the original comment. Optional.
     #updatePreviousComment: false
+    # Replace original - deletes the previous comment and creates a new one so
+    # it appears at the top of the PR activity. Optional. Use as an alternative
+    # to updatePreviousComment.
+    #replacePreviousComment: false
     # Comment reference - This will allow task to identify specific comment when
-    # using `addCommentOnlyOnce: true` or `updatePreviousComment: true` options 
+    # using `addCommentOnlyOnce: true`, `updatePreviousComment: true`, or
+    # `replacePreviousComment: true` options
     # and multiple different comments on same PR. Optional.
     commentReference: 'my-pr-comment'
     comment: |

@@ -9,8 +9,8 @@
   "author": "Tommi Laukkanen",
   "version": {
     "Major": 1,
-    "Minor": 6,
-    "Patch": 1
+    "Minor": 7,
+    "Patch": 0
   },
   "instanceNameFormat": "PR Comment",
   "inputs": [
@@ -51,11 +51,19 @@
       "helpMarkDown": "If checked, the comment will be updated if it already exists."
     },
     {
+      "name": "replacePreviousComment",
+      "type": "boolean",
+      "defaultValue": false,
+      "label": "Replace previous comment",
+      "required": false,
+      "helpMarkDown": "If checked, the previous comment will be deleted and a new comment will be added."
+    },
+    {
       "name": "commentReference",
       "type": "string",
       "label": "Comment reference",
       "required": false,
-      "helpMarkDown": "Identifies this task's comment when adding a comment only once or updating a previous comment."
+      "helpMarkDown": "Identifies this task's comment when adding a comment only once, updating a previous comment, or replacing a previous comment."
     },
     {
       "name": "markdownFile",

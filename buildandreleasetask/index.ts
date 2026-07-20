@@ -18,7 +18,7 @@ function getThreadProperty(properties: any, name: string): string | undefined {
 }
 
 function isMatchingTaskThread(thread: GitPullRequestCommentThread, commentReference: string): boolean {
-  if (getThreadProperty(thread.properties, taskProperty) == undefined) {
+  if (thread.isDeleted || getThreadProperty(thread.properties, taskProperty) == undefined) {
     return false
   }
 
@@ -85,7 +85,8 @@ async function run() {
     }
 
     const updatePreviousComment = tl.getBoolInput('updatePreviousComment', false)
-    if (updatePreviousComment) {
+    const replacePreviousComment = tl.getBoolInput('replacePreviousComment', false)
+    if (updatePreviousComment && !replacePreviousComment) {
       // Get old threads and check if there is already a thread with the comment task property
       const threads = await gitApi.getThreads(repositoryId, pullRequestId)
       console.log(`Checking if there is a thread with comment task property to update the PR comment`)
@@ -129,6 +130,46 @@ async function run() {
         }
       }
       console.log(`No thread found with comment task property - skipping PR comment update and adding new comment`)
+    }
+
+    if (replacePreviousComment) {
+      // Delete the previous task comment before creating a new thread so the new
+      // comment appears at the top of the pull request activity.
+      const threads = await gitApi.getThreads(repositoryId, pullRequestId)
+      console.log(`Checking if there is a thread with comment task property to replace the PR comment`)
+      if (threads != undefined && threads.length > 0) {
+        // Thread IDs increase over time, so prefer the most recently created
+        // matching thread if older replaced threads are still returned by the API.
+        const matchingThreads = threads
+          .filter(thread => isMatchingTaskThread(thread, commentReference) && thread.id != undefined)
+          .sort((left, right) => (right.id ?? -1) - (left.id ?? -1))
+
+        for (const thread of matchingThreads) {
+          console.log(`Checking thread: ${thread.id} with properties: ${JSON.stringify(thread.properties ?? {})}`)
+          const comments = await gitApi.getComments(repositoryId, pullRequestId, thread.id!)
+          const previousComment = comments?.find(comment =>
+            !comment.isDeleted &&
+            comment.commentType == CommentType.Text &&
+            comment.id != undefined &&
+            (comment.parentCommentId == undefined || comment.parentCommentId === 0)
+          )
+
+          if (previousComment?.id == undefined) {
+            console.log(`No text comment found in thread - checking other matching threads`)
+            continue
+          }
+
+          console.log(`Deleting previous comment in thread: ${thread.id}, comment: ${previousComment.id}`)
+          await gitApi.deleteComment(
+            repositoryId,
+            pullRequestId,
+            thread.id!,
+            previousComment.id
+          )
+          console.log(`Previous comment deleted from pull request`)
+          break
+        }
+      }
     }
 
     const thread: GitPullRequestCommentThread = {

@@ -63,4 +63,47 @@ describe('Task tests', function () {
       assert.equal(tr.stdOutContained('Comment added on pull request: This is **sample** _text_'), false, 'should not log the fallback comment');
     });
 
+    it('should replace the previous comment with the matching reference', async function() {
+      this.timeout(120000);
+
+      const tp = path.join(__dirname, 'replace-previous-comment.js');
+      const tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+      await tr.runAsync();
+      assert.equal(tr.succeeded, true, 'should have succeeded when replacing a previous comment');
+      assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+      assert.equal(tr.errorIssues.length, 0, "should have no errors");
+      assert.equal(tr.stdOutContained('Fetched comments for thread: 200'), true, 'should find the thread with the matching reference');
+      assert.equal(tr.stdOutContained('Fetched comments for thread: 100'), false, 'should ignore a different comment reference');
+      assert.equal(tr.stdOutContained('Fetched comments for thread: 300'), false, 'should ignore a deleted thread');
+      assert.equal(tr.stdOutContained('Deleted comment: 200/22'), true, 'should delete the previous comment');
+      assert.equal(tr.stdOutContained('Created replacement: Replacement comment; reference: build-status'), true, 'should create a new referenced comment');
+    });
+
+    it('should replace only an unreferenced comment when no reference is supplied', async function() {
+      this.timeout(120000);
+
+      const tp = path.join(__dirname, 'replace-unreferenced-comment.js');
+      const tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+      await tr.runAsync();
+      assert.equal(tr.succeeded, true, 'should have succeeded when replacing an unreferenced comment');
+      assert.equal(tr.stdOutContained('Fetched comments for thread: 100'), true, 'should find the unreferenced thread');
+      assert.equal(tr.stdOutContained('Fetched comments for thread: 200'), false, 'should ignore a referenced thread');
+      assert.equal(tr.stdOutContained('Deleted comment: 100/11'), true, 'should delete the unreferenced comment');
+    });
+
+    it('should create a new comment when no previous comment matches', async function() {
+      this.timeout(120000);
+
+      const tp = path.join(__dirname, 'replace-missing-comment.js');
+      const tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+      await tr.runAsync();
+      assert.equal(tr.succeeded, true, 'should have succeeded when no previous comment exists');
+      assert.equal(tr.stdOutContained('Unexpected comment lookup'), false, 'should not inspect a non-matching thread');
+      assert.equal(tr.stdOutContained('Unexpected comment deletion'), false, 'should not delete a non-matching comment');
+      assert.equal(tr.stdOutContained('Created replacement: New comment'), true, 'should create the new comment');
+    });
+
 });
